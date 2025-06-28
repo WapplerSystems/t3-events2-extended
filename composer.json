@@ -1,0 +1,38 @@
+{
+	"name": "wapplersystems/events2-extended",
+	"type": "typo3-cms-extension",
+	"description": "",
+	"keywords": [
+		"TYPO3",
+		"extension"
+	],
+	"homepage": "https://wappler.systems",
+	"authors": [
+		{
+			"name": "Sven Wappler",
+			"role": "Developer",
+			"homepage": "https://wappler.systems"
+		}
+	],
+	"license": [
+		"GPL-2.0+"
+	],
+	"require": {
+		"typo3/cms-core": "^13.0",
+		"jweiland/events2": "^13.0",
+	},
+	"suggest": {
+	},
+	"require-dev": {
+	},
+	"autoload": {
+		"psr-4": {
+			"WapplerSystems\\Events2Extended\\": "Classes"
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "events2_extended"
+		}
+	}
+}
