@@ -19,7 +19,7 @@
 	],
 	"require": {
 		"typo3/cms-core": "^13.0",
-		"jweiland/events2": "^13.0",
+		"jweiland/events2": "^10.0",
 	},
 	"suggest": {
 	},
