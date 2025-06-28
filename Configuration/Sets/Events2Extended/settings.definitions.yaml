@@ -1,0 +1,20 @@
+
+settings:
+  events2_extended.templateRootPath:
+    label: 'Templates'
+    category: 'events2_extended.templates'
+    description: 'Path to template root'
+    type: string
+    default: 'EXT:events2_extended/Resources/Private/Templates/'
+  events2_extended.partialRootPath:
+    label: 'Partials'
+    category: 'events2.templates'
+    description: 'Path to partial root'
+    type: string
+    default: 'EXT:events2_extended/Resources/Private/Partials/'
+  events2_extended.layoutRootPath:
+    label: 'Layouts'
+    category: 'events2_extended.templates'
+    description: 'Path to layout root'
+    type: string
+    default: 'EXT:events2_extended/Resources/Private/Layouts/'
