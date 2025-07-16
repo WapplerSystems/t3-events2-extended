@@ -23,5 +23,18 @@ ExtensionUtility::registerPlugin(
     '',
 );
 
-ExtensionManagementUtility::addToAllTCAtypes('tt_content', 'pages', 'events2_list', 'after:header');
+ExtensionManagementUtility::addToAllTCAtypes('tt_content', 'pages', 'events2extended_calendar', 'after:header');
 
+
+
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;Configuration,pi_flexform',
+    'events2extended_calendar',
+    'after:subheader',
+);
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:events2/Configuration/FlexForms/Calendar.xml',
+    'events2extended_calendar',
+);
