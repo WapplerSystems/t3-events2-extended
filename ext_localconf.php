@@ -14,9 +14,11 @@ call_user_func(static function (): void {
         'events2_extended',
         'Calendar',
         [
-            CalendarController::class => 'show',
+            CalendarController::class => 'show, goto',
         ],
-        [],
+        [
+            CalendarController::class => 'goto',
+        ],
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
     );
 

@@ -92,6 +92,11 @@ class CalendarController extends AbstractController
         $this->postProcessAndAssignFluidVariables([
             'settings' => $this->settings,
             'month' => $month,
+            'year' => $year,
+            'nextYearAndMonth' => $year . str_pad((string)($month + 1), 2, '0', STR_PAD_LEFT),
+            'previousYearAndMonth' => $year . str_pad((string)($month - 1), 2, '0', STR_PAD_LEFT),
+            'nextMonth' => (int)($month + 1),
+            'previousMonth' => (int)($month - 1),
             'days' => $daysOfMonth,
             'calendarWeeks' => $calendarWeeks,
             //'startOfMonth' => $startOfMonth,
@@ -236,4 +241,23 @@ class CalendarController extends AbstractController
         }
         return $weeks;
     }
+
+
+    public function gotoAction(string $yearAndMonth, ?string $categories = null): ResponseInterface
+    {
+
+        $redirectUri = $this->uriBuilder->reset()->setTargetPageUid($GLOBALS['TSFE']->id)->setArguments([
+            'tx_events2extended_calendar' => [
+                'action' => 'show',
+                'yearAndMonth' => $yearAndMonth,
+                'categories' => $categories,
+            ],
+
+        ])->buildFrontendUri();
+
+        return $this->redirectToUri($redirectUri);
+
+
+    }
+
 }

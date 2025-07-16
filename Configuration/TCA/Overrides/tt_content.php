@@ -35,6 +35,6 @@ ExtensionManagementUtility::addToAllTCAtypes(
 );
 ExtensionManagementUtility::addPiFlexFormValue(
     '*',
-    'FILE:EXT:events2/Configuration/FlexForms/Calendar.xml',
+    'FILE:EXT:events2_extended/Configuration/FlexForms/Calendar.xml',
     'events2extended_calendar',
 );
