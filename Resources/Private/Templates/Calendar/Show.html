@@ -8,24 +8,6 @@
 <f:section name="Main">
 
 
-    <div class="calendar">
-
-        <div class="day-name">Mo</div>
-        <div class="day-name">Di</div>
-        <div class="day-name">Mi</div>
-        <div class="day-name">Do</div>
-        <div class="day-name">Fr</div>
-        <div class="day-name">Sa</div>
-        <div class="day-name">So</div>
-
-        <f:for each="{calendar}" as="date">
-            <div class="day {f:if(condition: '{date.format(\'m\')} != {month.format(\'m\')}', then: 'other-month')}">
-                <span class="day-number">{date.format('j')}</span>
-            </div>
-        </f:for>
-    </div>
-
-
     <div class="e2ec-wrap">
 
         <f:form class="e2ec-search-form e2ec-totalcal-box e2ec-dropdown-classic e2ec-skin-search-init" additionalAttributes="{autocomplete: 'off'}">
@@ -77,19 +59,17 @@
                 </div>
             </div>
         </f:form>
-        <div class="e2ec-calendar e2ec-box-calendar e2ec-event-calendar-classic e2ec-event-container-classic" id="mec_skin_events_74_full">
-            <div class="e2ec-calendar-side e2ec-clear">
+        <div class="e2ec-calendar e2ec-box-calendar e2ec-event-calendar-classic e2ec-event-container-classic">
                 <div class="e2ec-skin-monthly-view-month-navigator-container">
-                    <div class="e2ec-month-navigator" id="mec_month_navigator_74_202507">
-                        <f:form.button name="month" value="6" class="e2ec-previous-month e2ec-load-month e2ec-previous-month">Juni</f:form.button>
-                        <div class="e2ec-calendar-header"><h2>Juli 2025</h2></div>
-                        <f:form.button name="month" class="e2ec-previous-month e2ec-load-month e2ec-previous-month">Juni</f:form.button>
-                        <div class="e2ec-next-month e2ec-load-month e2ec-next-month" data-e2ec-year="2025" data-e2ec-month="08"><a href="#" class="e2ec-load-month-link">August <i class="e2ec-sl-angle-right"></i></a></div>
+                    <div class="e2ec-month-navigator">
+                        <f:form.button name="month" value="6" class="e2ec-previous-month">Juni</f:form.button>
+                        <p class="e2ec-calendar-header">Juli 2025</p>
+                        <f:form.button name="month" value="32333" class="e2ec-next-month">Juni</f:form.button>
                     </div>
                 </div>
 
                 <div class="e2ec-calendar-table" id="mec_skin_events_74">
-                    <div class="e2ec-month-container e2ec-month-container-selected" id="mec_monthly_view_month_74_202507" data-month-id="202507">
+                    <div class="e2ec-month-container e2ec-month-container-selected">
                         <dl class="e2ec-calendar-table-head">
                             <dt class="e2ec-calendar-day-head">MO</dt>
                             <dt class="e2ec-calendar-day-head">DI</dt>
@@ -105,18 +85,21 @@
                             <dl class="e2ec-calendar-row">
                                 <f:for each="{calendarWeek}" key="weekDayNum" as="weekDay">
                                     <dt class="e2ec-calendar-day {f:if(condition:weekDay.day,then:' e2ec-calendar-in-month')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}" data-day="" data-month="">
-                                        <button data-bs-toggle="collapse" data-bs-target="#day-{weekDay.date -> f:format.date(format: 'Ymd')}" href="#">{weekDayNum}</button>
+                                        <button {f:if(condition: '{weekDay.events -> f:count()} > 0', else:'disabled')} data-bs-toggle="collapse" data-bs-target="#day-{weekDay.date -> f:format.date(format: 'Ymd')}" href="#">
+                                            <span>{weekDay.day}</span>
+                                        </button>
                                     </dt>
                                 </f:for>
                             </dl>
                             <div class="e2ec-calendar-event-row">
                                 <f:for each="{calendarWeek}" key="weekDayNum" as="weekDay">
                                     <div class="e2ec-calendar-events collapse" id="day-{weekDay.date -> f:format.date(format: 'Ymd')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}">
+                                        <p class="e2ec-calendar-events-title">Veranstaltungen für <span class="e2ec-color e2ec-table-side-day"> {weekDay.day}</span> {weekDay.date -> f:format.date(format: 'F')}</p>
 
                                         <f:for each="{weekDay.events}" as="event">
-                                            <div class="e2ec-calendar-event"><p class="e2ec-table-side-title">Veranstaltungen für <span class="e2ec-color e2ec-table-side-day"> {weekDay.day}</span> {weekDay.date -> f:format.date(format: 'F')}</p>
+                                            <div class="e2ec-calendar-event">
                                                 <article class="e2ec-past-event ended-relative e2ec-event-article ">
-
+                                                    <p>{event.title}</p>
                                                     <f:if condition="{event.images}">
                                                         <div class="e2ec-event-image">
 
@@ -137,7 +120,6 @@
                     </div>
                 </div>
 
-            </div>
         </div>
 
 
