@@ -152,10 +152,13 @@ class CalendarController extends AbstractController
             $categories,
         );
 
+        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper */
+        $dataMapper = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class);
+
+
         $days = [];
 
         foreach ($events as $event) {
-            //DebugUtility::debug($event, 'Event');
 
             $date = new \DateTimeImmutable(date('c', (int)$event['day']));
             if ($date->getTimezone()->getLocation() === false) {
@@ -165,14 +168,12 @@ class CalendarController extends AbstractController
             if (!isset($days[$day])) {
                 $days[$day] = [];
             }
-            $days[$day][] = [
-                'uid' => (int)$event['uid'],
-                'title' => $event['title'],
-                'teaser' => $event['teaser'],
-                'details' => $event['detail_information'],
-                'multiple_times' => (bool)$event['multiple_times'],
-                'images' => $event['images'],
-            ];
+            $eventObjects = $dataMapper->map(
+                \JWeiland\Events2\Domain\Model\Event::class,
+                [$event]
+            );
+            //DebugUtility::debug($eventObjects, 'Event');
+            $days[$day][] = $eventObjects[0];
 
         }
 

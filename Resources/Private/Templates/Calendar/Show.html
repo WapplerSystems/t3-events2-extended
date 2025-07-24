@@ -106,12 +106,13 @@
                                             <div class="e2ec-calendar-event">
                                                 <article class="e2ec-past-event ended-relative e2ec-event-article ">
                                                     <p>{event.title}</p>
+                                                    <p>Ort: {event.location.locationAsString}</p>
                                                     <f:if condition="{event.images}">
                                                         <div class="e2ec-event-image">
 
                                                         </div>
                                                     </f:if>
-
+                                                    <hr>
                                                 </article>
                                             </div>
                                         </f:for>
