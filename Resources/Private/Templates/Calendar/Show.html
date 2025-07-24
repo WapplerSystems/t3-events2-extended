@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <div class="e2ec-calendar-table" id="mec_skin_events_74">
+                <div class="e2ec-calendar-table" id="e2ec-calendar-table">
                     <div class="e2ec-month-container e2ec-month-container-selected">
                         <dl class="e2ec-calendar-table-head">
                             <dt class="e2ec-calendar-day-head">MO</dt>
@@ -99,7 +99,7 @@
                             </dl>
                             <div class="e2ec-calendar-event-row">
                                 <f:for each="{calendarWeek}" key="weekDayNum" as="weekDay">
-                                    <div class="e2ec-calendar-events collapse" id="day-{weekDay.date -> f:format.date(format: 'Ymd')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}">
+                                    <div class="e2ec-calendar-events collapse" data-bs-parent="#e2ec-calendar-table" id="day-{weekDay.date -> f:format.date(format: 'Ymd')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}">
                                         <p class="e2ec-calendar-events-title">Veranstaltungen für <span class="e2ec-color e2ec-table-side-day"> {weekDay.day}</span> {weekDay.date -> f:format.date(format: 'F')}</p>
 
                                         <f:for each="{weekDay.events}" as="event">
