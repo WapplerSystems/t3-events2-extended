@@ -57,7 +57,7 @@ class CalendarController extends AbstractController
         );
 
 
-        $locations = GeneralUtility::intExplode(',', (string)$this->settings['locations'], true);
+        $locations = GeneralUtility::intExplode(',', (string)($this->settings['locations'] ?? ''), true);
         $locationsArray = [];
         foreach ($locations as $locationUid) {
             /** @var Location $locationObject */
@@ -67,7 +67,7 @@ class CalendarController extends AbstractController
             }
         }
 
-        $categories = GeneralUtility::intExplode(',', (string)$this->settings['categories'], true);
+        $categories = GeneralUtility::intExplode(',', (string)($this->settings['categories'] ?? ''), true);
         $categoriesArray = [];
         foreach ($categories as $categoryUid) {
             /** @var Category $categoryObject */
