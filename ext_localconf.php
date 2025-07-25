@@ -17,7 +17,7 @@ call_user_func(static function (): void {
             CalendarController::class => 'show, goto',
         ],
         [
-            CalendarController::class => 'goto',
+            CalendarController::class => 'show, goto',
         ],
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
     );

@@ -7,6 +7,10 @@ namespace WapplerSystems\Events2Extended\Controller;
 
 use JWeiland\Events2\Configuration\ExtConf;
 use JWeiland\Events2\Controller\AbstractController;
+use JWeiland\Events2\Domain\Model\Category;
+use JWeiland\Events2\Domain\Model\Location;
+use JWeiland\Events2\Domain\Repository\CategoryRepository;
+use JWeiland\Events2\Domain\Repository\LocationRepository;
 use JWeiland\Events2\Event\ModifyDaysForMonthEvent;
 use JWeiland\Events2\Session\UserSession;
 use JWeiland\Events2\Traits\InjectCalendarHelperTrait;
@@ -15,10 +19,10 @@ use JWeiland\Events2\Utility\DateTimeUtility;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use WapplerSystems\Events2Extended\Service\DatabaseService;
 
 class CalendarController extends AbstractController
@@ -32,14 +36,47 @@ class CalendarController extends AbstractController
         protected ExtConf         $extConf,
         protected DateTimeUtility $dateTimeUtility,
         protected UserSession     $userSession,
-        protected DatabaseService $databaseService)
+        protected DatabaseService $databaseService,
+        readonly protected LocationRepository $locationRepository,
+        readonly protected CategoryRepository $categoryRepository,
+    )
     {
 
     }
 
 
-    public function showAction(?string $yearAndMonth = null, ?string $categories = null): ResponseInterface
+    public function showAction(?string $yearAndMonth = null, ?int $category = null, ?int $location = null): ResponseInterface
     {
+
+        $flexFormSettings = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+        );
+        $this->settings = array_merge(
+            $this->settings,
+            $flexFormSettings ?? []
+        );
+
+
+        $locations = GeneralUtility::intExplode(',', (string)$this->settings['locations'], true);
+        $locationsArray = [];
+        foreach ($locations as $locationUid) {
+            /** @var Location $locationObject */
+            $locationObject = $this->locationRepository->findByUid($locationUid);
+            if ($locationObject) {
+                $locationsArray[$locationObject->getUid()] = $locationObject->getLocationAsString();
+            }
+        }
+
+        $categories = GeneralUtility::intExplode(',', (string)$this->settings['categories'], true);
+        $categoriesArray = [];
+        foreach ($categories as $categoryUid) {
+            /** @var Category $categoryObject */
+            $categoryObject = $this->categoryRepository->findByUid($categoryUid);
+            if ($categoryObject) {
+                $categoriesArray[$categoryObject->getUid()] = $categoryObject->getTitle();
+            }
+        }
+
 
         $frameworkConfiguration = $this->getMergedFrameworkConfiguration();
 
@@ -55,17 +92,25 @@ class CalendarController extends AbstractController
 
         $month = MathUtility::forceIntegerInRange($month, 1, 12);
         $year = MathUtility::forceIntegerInRange($year, 1500, 2500);
-        if ($categories) {
-            $categories = GeneralUtility::intExplode(',', $categories, true);
-        } else {
-            $categories = $this->settings['categories'] ?? [];
-        }
+
         $storagePages = GeneralUtility::intExplode(',', (string)$frameworkConfiguration['persistence']['storagePid'], true);
+
+        $selectedLocation = $location;
+        $selectedCategory = $category;
 
         // Save a session for selected month
         //$this->userSession->setMonthAndYear($month, $year);
 
-        $daysOfMonth = $this->findAllDaysInMonth($month, $year, $categories, $storagePages);
+        $categories = [];
+        if ($category !== null) {
+            $categories = [$category];
+        }
+        $locations = [];
+        if ($location !== null) {
+            $locations = [$location];
+        }
+
+        $daysOfMonth = $this->findAllDaysInMonth($month, $year, $storagePages, $categories, $locations);
 
 
         //$this->addHolidays($daysOfMonth, $month);
@@ -99,16 +144,20 @@ class CalendarController extends AbstractController
             'previousMonth' => (int)($month - 1),
             'days' => $daysOfMonth,
             'calendarWeeks' => $calendarWeeks,
-            //'startOfMonth' => $startOfMonth,
-            //'endOfMonth' => $endOfMonth,
-            'pidOfListPage' => $this->settings['pidOfListPage'] ?: $this->getTypoScriptFrontendController($this->request)->id
+            'showCategoryFilter' => $this->settings['showCategoryFilter'] ?? false,
+            'selectedLocation' => $selectedLocation,
+            'selectedCategory' => $selectedCategory,
+            'showLocationFilter' => $this->settings['showLocationFilter'] ?? false,
+            'pidOfListPage' => $this->settings['pidOfListPage'] ?: $this->getTypoScriptFrontendController($this->request)->id,
+            'locationsArray' => $locationsArray,
+            'categoriesArray' => $categoriesArray,
         ]);
 
         return $this->htmlResponse();
     }
 
 
-    protected function findAllDaysInMonth(int $month, int $year, array $categories, array $storagePages): array
+    protected function findAllDaysInMonth(int $month, int $year, array $storagePages, array $categories = [], array $locations = []): array
     {
         $earliestAllowedDate = new \DateTimeImmutable('now midnight');
         $earliestAllowedDate = $earliestAllowedDate->modify(sprintf('-%d months', $this->extConf->getRecurringPast()));
@@ -152,13 +201,19 @@ class CalendarController extends AbstractController
             $categories,
         );
 
-        /** @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper */
-        $dataMapper = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class);
+        /** @var DataMapper $dataMapper */
+        $dataMapper = GeneralUtility::makeInstance(DataMapper::class);
 
 
         $days = [];
 
         foreach ($events as $event) {
+            if (count($locations) > 0) {
+                if (!in_array($event['location'], $locations, true)) {
+                    // skip event if location is not in selected locations
+                    continue;
+                }
+            }
 
             $date = new \DateTimeImmutable(date('c', (int)$event['day']));
             if ($date->getTimezone()->getLocation() === false) {
@@ -244,14 +299,15 @@ class CalendarController extends AbstractController
     }
 
 
-    public function gotoAction(string $yearAndMonth, ?string $categories = null): ResponseInterface
+    public function gotoAction(string $yearAndMonth, ?int $category = null, ?int $location = null): ResponseInterface
     {
 
         $redirectUri = $this->uriBuilder->reset()->setTargetPageUid($GLOBALS['TSFE']->id)->setArguments([
             'tx_events2extended_calendar' => [
                 'action' => 'show',
                 'yearAndMonth' => $yearAndMonth,
-                'categories' => $categories,
+                'category' => $category,
+                'location' => $location,
             ],
 
         ])->buildFrontendUri();

@@ -6,8 +6,14 @@
 			<trans-unit id="showCategoryFilter" xml:space="preserve">
 				<source>Show category filter</source>
 			</trans-unit>
+			<trans-unit id="showLocationFilter" xml:space="preserve">
+				<source>Show location filter</source>
+			</trans-unit>
 			<trans-unit id="showMonths" xml:space="preserve">
 				<source>Number of months to be displayed</source>
+			</trans-unit>
+			<trans-unit id="locations" xml:space="preserve">
+				<source>Locations</source>
 			</trans-unit>
 		</body>
 	</file>

@@ -14,6 +14,16 @@
             <f:form.hidden name="yearAndMonth" value="" />
 
             <div class="e2ec-dropdown-wrap">
+
+                <div class="input-group mb-3" role="search" aria-label="Filter">
+                    <f:if condition="{showLocationFilter}">
+                        <f:form.select class="form-select" value="{selectedLocation}" name="location" options="{locationsArray}" prependOptionLabel="Ort" prependOptionValue="" additionalAttributes="{onchange: 'this.form.submit();'}" />
+                    </f:if>
+                    <f:if condition="{showCategoryFilter}">
+                        <f:form.select class="form-select" value="{selectedCategory}" name="category" options="{categoriesArray}" prependOptionLabel="Kategorie" prependOptionValue="" additionalAttributes="{onchange: 'this.form.submit();'}" />
+                    </f:if>
+                </div>
+
                 <f:comment>
 
 

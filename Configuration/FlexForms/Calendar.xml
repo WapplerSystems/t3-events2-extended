@@ -26,6 +26,15 @@
                             <minitems>0</minitems>
                         </config>
                     </settings.categories>
+                    <settings.locations>
+                        <label>LLL:EXT:events2_extended/Resources/Private/Language/FlexForms.xlf:locations</label>
+                        <config>
+                            <type>group</type>
+                            <allowed>tx_events2_domain_model_location</allowed>
+                            <maxitems>99</maxitems>
+                            <minitems>0</minitems>
+                        </config>
+                    </settings.locations>
                     <settings.pidOfListPage>
                         <label>LLL:EXT:events2/Resources/Private/Language/FlexForms.xlf:pidOfListPage</label>
                         <config>
@@ -43,6 +52,13 @@
                             <default>0</default>
                         </config>
                     </settings.showCategoryFilter>
+                    <settings.showLocationFilter>
+                        <label>LLL:EXT:events2_extended/Resources/Private/Language/FlexForms.xlf:showLocationFilter</label>
+                        <config>
+                            <type>check</type>
+                            <default>0</default>
+                        </config>
+                    </settings.showLocationFilter>
                     <settings.showMonths>
                         <label>LLL:EXT:events2_extended/Resources/Private/Language/FlexForms.xlf:showMonths</label>
                         <config>
