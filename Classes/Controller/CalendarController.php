@@ -132,8 +132,6 @@ class CalendarController extends AbstractController
             }
         }
 
-        //DebugUtility::debug($calendarWeeks);
-
         $this->postProcessAndAssignFluidVariables([
             'settings' => $this->settings,
             'month' => $month,
@@ -290,6 +288,7 @@ class CalendarController extends AbstractController
             }
             $weeks[$week][(int)$day->format('N')] = [
                 'date' => $day,
+                'timestamp' => (int)$day->format('U'),
                 'day' => (int)$day->format('j'),
                 'month' => (int)$day->format('n'),
                 'year' => (int)$day->format('Y'),

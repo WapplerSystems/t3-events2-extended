@@ -7,7 +7,6 @@
 
 <f:section name="Main">
 
-
     <div class="e2ec-wrap">
 
         <f:form action="goto" class="e2ec-search-form e2ec-totalcal-box e2ec-dropdown-classic e2ec-skin-search-init" additionalAttributes="{autocomplete: 'off'}">
@@ -24,55 +23,6 @@
                     </f:if>
                 </div>
 
-                <f:comment>
-
-
-                <div class="e2ec-dropdown-search"><i class="e2ec-sl-folder"></i><select name=" " id="mec_sf_category_74" class="postform">
-                    <option value="" selected="selected">Kategorie</option>
-                    <option class="level-0" value="92">Anlass</option>
-                    <option class="level-0" value="93">für Familien</option>
-                    <option class="level-0" value="171">für Jugendliche</option>
-                </select>
-                </div>
-                <div class="e2ec-dropdown-search"><i class="e2ec-sl-location-pin"></i><select name=" " id="mec_sf_location_74" class="postform">
-                    <option value="" selected="selected">Standort</option>
-                    <option class="level-0" value="170">Bergwerk Gonzen Sargans</option>
-                    <option class="level-0" value="187">Dorfkapelle Mels</option>
-                    <option class="level-0" value="180">Friedhof Mels</option>
-                    <option class="level-0" value="164">Grotte Wangs</option>
-                    <option class="level-0" value="181">Haus Gutenberg, Balzers</option>
-                    <option class="level-0" value="172">Kapelle Butz</option>
-                    <option class="level-0" value="175">Kapelle Oberheiligkreuz</option>
-                    <option class="level-0" value="173">Kapelle Ragnatsch</option>
-                    <option class="level-0" value="188">Kapelle Schwendi</option>
-                    <option class="level-0" value="174">Kapelle Tils</option>
-                    <option class="level-0" value="178">Kirchplatz Sargans</option>
-                    <option class="level-0" value="129">Lourdesgrotte</option>
-                    <option class="level-0" value="176">Mehrzweckhalle Weisstannen</option>
-                    <option class="level-0" value="186">Mels</option>
-                    <option class="level-0" value="68">Pfarrei Heiligkreuz</option>
-                    <option class="level-0" value="62">Pfarrei Mels</option>
-                    <option class="level-0" value="4">Pfarrei Sargans</option>
-                    <option class="level-0" value="67">Pfarrei Vilters</option>
-                    <option class="level-0" value="66">Pfarrei Wangs</option>
-                    <option class="level-0" value="65">Pfarrei Weisstannen</option>
-                    <option class="level-0" value="118">Pfarreiheim Mels</option>
-                    <option class="level-0" value="121">Pfarreiheim Sandgrube Sargans</option>
-                    <option class="level-0" value="120">Pfarreiheim Vilters</option>
-                    <option class="level-0" value="119">Pfarreiheim Wangs</option>
-                    <option class="level-0" value="122">Pfarreisaal Heiligkreuz</option>
-                    <option class="level-0" value="166">Pfarrkirche Heiligkreuz</option>
-                    <option class="level-0" value="123">Pfarrkirche Mels</option>
-                    <option class="level-0" value="167">Pfarrkirche Sargans</option>
-                    <option class="level-0" value="162">Pfarrkirche Vilters</option>
-                    <option class="level-0" value="154">Pfarrkirche Wangs</option>
-                    <option class="level-0" value="133">Spleekapelle</option>
-                    <option class="level-0" value="179">Unterer Pizolbahnparkplatz</option>
-                    <option class="level-0" value="138">Vermol Mels</option>
-                    <option class="level-0" value="193">Vildkapelle Sargans</option>
-                </select>
-                </div>
-                </f:comment>
             </div>
 
             <div class="e2ec-calendar e2ec-box-calendar e2ec-event-calendar-classic e2ec-event-container-classic">
@@ -115,7 +65,22 @@
                                         <f:for each="{weekDay.events}" as="event">
                                             <div class="e2ec-calendar-event">
                                                 <article class="e2ec-past-event ended-relative e2ec-event-article ">
-                                                    <p>{event.title}</p>
+                                                    <p>
+                                                    <f:if condition="{settings.pidOfDetailPage}">
+                                                        <f:then>
+                                                            <f:link.action
+                                                                action="show"
+                                                                controller="Day"
+                                                                pluginName="show"
+                                                                pageUid="{settings.pidOfDetailPage}"
+                                                                arguments="{timestamp: weekDay.timestamp, event: event}"
+                                                            >{event.title}</f:link.action>
+                                                        </f:then>
+                                                        <f:else>
+                                                            {event.title}
+                                                        </f:else>
+                                                    </f:if>
+                                                    </p>
                                                     <p>Ort: {event.location.locationAsString}</p>
                                                     <f:if condition="{event.images}">
                                                         <div class="e2ec-event-image">
