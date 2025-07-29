@@ -34,7 +34,15 @@
     width: 100%;
     border: none;
     display: flex;
+    align-items: flex-start;
     transition: all .25s ease;
+}
+.e2ec-calendar-day button[disabled] {
+    color: #666;
+}
+.e2ec-calendar-day button:not([disabled]) {
+    background-color: #40d9f14f;
+    color: #000;
 }
 .e2ec-calendar-day button:not([disabled]):hover {
     background-color: #40d9f1;
@@ -56,4 +64,8 @@
     padding: 10px 20px;
     background-color: #f4f4f4;
     border-bottom: 1px solid #eaeaea;
+}
+.e2ec-calendar-today button span {
+    border: 2px solid red;
+    padding: 2px;
 }

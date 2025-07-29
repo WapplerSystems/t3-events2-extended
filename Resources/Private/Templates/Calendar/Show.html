@@ -50,7 +50,7 @@
 
                             <dl class="e2ec-calendar-row">
                                 <f:for each="{calendarWeek}" key="weekDayNum" as="weekDay">
-                                    <dt class="e2ec-calendar-day {f:if(condition:weekDay.day,then:' e2ec-calendar-in-month')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}" data-day="" data-month="">
+                                    <dt class="e2ec-calendar-day{f:if(condition:weekDay.isToday,then:' e2ec-calendar-today')}{f:if(condition:weekDay.day,then:' e2ec-calendar-in-month')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}" data-day="" data-month="">
                                         <button type="button" {f:if(condition: '{weekDay.events -> f:count()} > 0', else:'disabled')} data-bs-toggle="collapse" data-bs-target="#day-{weekDay.date -> f:format.date(format: 'Ymd')}" href="#">
                                             <span>{weekDay.day}</span>
                                         </button>

@@ -129,6 +129,11 @@ class CalendarController extends AbstractController
             foreach ($weekDays as $dayNum => $day) {
                 $dayOfMonth = $day['day'] ?? -1;
                 $calendarWeeks[$calendarWeekNum][$dayNum]['events'] = $daysOfMonth[$dayOfMonth] ?? [];
+                if (isset($day['date']) && $day['date'] instanceof \DateTimeImmutable) {
+                    if ($day['date']->format('Y-m-d') === (new \DateTimeImmutable('today'))->format('Y-m-d')) {
+                        $calendarWeeks[$calendarWeekNum][$dayNum]['isToday'] = true;
+                    }
+                }
             }
         }
 
