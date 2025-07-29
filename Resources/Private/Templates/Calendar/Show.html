@@ -60,7 +60,7 @@
                             <div class="e2ec-calendar-event-row">
                                 <f:for each="{calendarWeek}" key="weekDayNum" as="weekDay">
                                     <div class="e2ec-calendar-events collapse" data-bs-parent="#e2ec-calendar-table" id="day-{weekDay.date -> f:format.date(format: 'Ymd')}" data-e2ec-cell="{weekDay.date -> f:format.date(format: 'Ymd')}">
-                                        <p class="e2ec-calendar-events-title">Veranstaltungen für <span class="e2ec-color e2ec-table-side-day"> {weekDay.day}</span> {weekDay.date -> f:format.date(format: 'F')}</p>
+                                        <p class="e2ec-calendar-events-title">Veranstaltungen für <span class="e2ec-color e2ec-table-side-day"> {weekDay.day}.</span> <f:translate key="LLL:EXT:events2_extended/Resources/Private/Language/locallang.xlf:month.{weekDay.date -> f:format.date(format: 'n')}" /></p>
 
                                         <f:for each="{weekDay.events}" as="event">
                                             <div class="e2ec-calendar-event">
@@ -82,6 +82,13 @@
                                                         </f:else>
                                                     </f:if>
                                                     </p>
+                                                    <f:if condition="{event.eventTime.timeBegin}">
+                                                        <p>{event.eventTime.timeBegin}
+                                                        <f:if condition="{event.eventTime.timeEnd}">
+                                                            - {event.eventTime.timeEnd}
+                                                        </f:if>Uhr</p>
+                                                    </f:if>
+
                                                     <p>Ort: {event.location.locationAsString}</p>
                                                     <f:if condition="{event.images}">
                                                         <div class="e2ec-event-image">
