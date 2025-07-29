@@ -56,7 +56,6 @@ class CalendarController extends AbstractController
             $flexFormSettings ?? []
         );
 
-
         $locations = GeneralUtility::intExplode(',', (string)($this->settings['locations'] ?? ''), true);
         $locationsArray = [];
         foreach ($locations as $locationUid) {
@@ -77,8 +76,9 @@ class CalendarController extends AbstractController
             }
         }
 
-
-        $frameworkConfiguration = $this->getMergedFrameworkConfiguration();
+        $frameworkConfiguration = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+        );
 
         if ($yearAndMonth === null || $yearAndMonth === '') {
             // get current month and year
@@ -146,7 +146,7 @@ class CalendarController extends AbstractController
             'selectedLocation' => $selectedLocation,
             'selectedCategory' => $selectedCategory,
             'showLocationFilter' => $this->settings['showLocationFilter'] ?? false,
-            'pidOfListPage' => $this->settings['pidOfListPage'] ?: $this->getTypoScriptFrontendController($this->request)->id,
+            'pidOfListPage' => $this->settings['pidOfListPage'] ?: $this->getPageArguments($this->request)->getPageId(),
             'locationsArray' => $locationsArray,
             'categoriesArray' => $categoriesArray,
         ]);
@@ -256,16 +256,6 @@ class CalendarController extends AbstractController
         }
     }
 
-
-    /**
-     * Returns the merged (TypoScript + FlexForm) plugin configuration
-     */
-    protected function getMergedFrameworkConfiguration(): array
-    {
-        return $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
-        );
-    }
 
     private function getCalendarWeeks(int $month, int $year)
     {
