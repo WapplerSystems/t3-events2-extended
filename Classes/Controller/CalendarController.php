@@ -91,7 +91,7 @@ class CalendarController extends AbstractController
         }
 
         $month = MathUtility::forceIntegerInRange($month, 1, 12);
-        $year = MathUtility::forceIntegerInRange($year, 1500, 2500);
+        $year = MathUtility::forceIntegerInRange($year, 1500, 2800);
 
         $storagePages = GeneralUtility::intExplode(',', (string)$frameworkConfiguration['persistence']['storagePid'], true);
 
@@ -137,14 +137,31 @@ class CalendarController extends AbstractController
             }
         }
 
+        if ($month === 12) {
+            $nextMonth = 1;
+            $nextYear = $year + 1;
+        } else {
+            $nextMonth = $month + 1;
+            $nextYear = $year;
+        }
+        $nextYearAndMonth = $nextYear.str_pad((string)$nextMonth, 2, '0', STR_PAD_LEFT);
+        if ($month === 1) {
+            $previousMonth = 12;
+            $previousYear = $year - 1;
+        } else {
+            $previousMonth = $month - 1;
+            $previousYear = $year;
+        }
+        $previousYearAndMonth = $previousYear.str_pad((string)$previousMonth, 2, '0', STR_PAD_LEFT);
+
         $this->postProcessAndAssignFluidVariables([
             'settings' => $this->settings,
             'month' => $month,
             'year' => $year,
-            'nextYearAndMonth' => $year . str_pad((string)($month + 1), 2, '0', STR_PAD_LEFT),
-            'previousYearAndMonth' => $year . str_pad((string)($month - 1), 2, '0', STR_PAD_LEFT),
-            'nextMonth' => (int)($month + 1),
-            'previousMonth' => (int)($month - 1),
+            'nextYearAndMonth' => $nextYearAndMonth,
+            'previousYearAndMonth' => $previousYearAndMonth,
+            'nextMonth' => $nextMonth,
+            'previousMonth' => $previousMonth,
             'days' => $daysOfMonth,
             'calendarWeeks' => $calendarWeeks,
             'showCategoryFilter' => $this->settings['showCategoryFilter'] ?? false,

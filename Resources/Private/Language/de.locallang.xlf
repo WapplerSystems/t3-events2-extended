@@ -4,40 +4,40 @@
 		<header/>
 		<body>
 			<trans-unit id="month.1" xml:space="preserve">
-				<source>January</source>
+				<target>Januar</target>
 			</trans-unit>
 			<trans-unit id="month.2" xml:space="preserve">
-				<source>February</source>
+				<target>Februar</target>
 			</trans-unit>
 			<trans-unit id="month.3" xml:space="preserve">
-				<source>March</source>
+				<target>März</target>
 			</trans-unit>
 			<trans-unit id="month.4" xml:space="preserve">
-				<source>April</source>
+				<target>April</target>
 			</trans-unit>
 			<trans-unit id="month.5" xml:space="preserve">
-				<source>May</source>
+				<target>Mai</target>
 			</trans-unit>
 			<trans-unit id="month.6" xml:space="preserve">
-				<source>June</source>
+				<target>Juni</target>
 			</trans-unit>
 			<trans-unit id="month.7" xml:space="preserve">
-				<source>July</source>
+				<target>Juli</target>
 			</trans-unit>
 			<trans-unit id="month.8" xml:space="preserve">
-				<source>August</source>
+				<target>August</target>
 			</trans-unit>
 			<trans-unit id="month.9" xml:space="preserve">
-				<source>September</source>
+				<target>September</target>
 			</trans-unit>
 			<trans-unit id="month.10" xml:space="preserve">
-				<source>October</source>
+				<target>Oktober</target>
 			</trans-unit>
 			<trans-unit id="month.11" xml:space="preserve">
-				<source>November</source>
+				<target>November</target>
 			</trans-unit>
 			<trans-unit id="month.12" xml:space="preserve">
-				<source>December</source>
+				<target>Dezember</target>
 			</trans-unit>
 		</body>
 	</file>
