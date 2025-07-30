@@ -28,9 +28,15 @@
             <div class="e2ec-calendar e2ec-box-calendar e2ec-event-calendar-classic e2ec-event-container-classic">
                 <div class="e2ec-skin-monthly-view-month-navigator-container">
                     <div class="e2ec-month-navigator">
-                        <f:form.button type="submit" name="yearAndMonth" value="{previousYearAndMonth}" class="e2ec-previous-month"><f:translate key="LLL:EXT:events2_extended/Resources/Private/Language/locallang.xlf:month.{previousMonth}" /></f:form.button>
+                        <f:form.button type="submit" name="yearAndMonth" value="{previousYearAndMonth}" class="e2ec-previous-month e2ec-nav-buttons">
+                            <f:image src="EXT:events2_extended/Resources/Public/Icons/chevron-left-solid-full.svg" alt="" class="e2ec-nav-icon" />
+                            <f:translate key="LLL:EXT:events2_extended/Resources/Private/Language/locallang.xlf:month.{previousMonth}" />
+                        </f:form.button>
                         <p class="e2ec-calendar-header"><f:translate key="LLL:EXT:events2_extended/Resources/Private/Language/locallang.xlf:month.{month}" /> {year}</p>
-                        <f:form.button type="submit" name="yearAndMonth" value="{nextYearAndMonth}" class="e2ec-next-month"><f:translate key="LLL:EXT:events2_extended/Resources/Private/Language/locallang.xlf:month.{nextMonth}" /></f:form.button>
+                        <f:form.button type="submit" name="yearAndMonth" value="{nextYearAndMonth}" class="e2ec-next-month e2ec-nav-buttons">
+                            <f:translate key="LLL:EXT:events2_extended/Resources/Private/Language/locallang.xlf:month.{nextMonth}" />
+                            <f:image src="EXT:events2_extended/Resources/Public/Icons/chevron-right-solid-full.svg" alt="" class="e2ec-nav-icon" />
+                        </f:form.button>
                     </div>
                 </div>
 

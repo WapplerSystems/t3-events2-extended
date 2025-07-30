@@ -69,3 +69,16 @@
     border: 2px solid red;
     padding: 2px;
 }
+.e2ec-nav-buttons {
+    border: 2px solid #ccc;
+    padding: 4px 20px;
+}
+.e2ec-calendar-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+}
+.e2ec-nav-icon {
+    height: 1.2rem;
+    width: 1.2rem;
+}
