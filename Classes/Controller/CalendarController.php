@@ -8,6 +8,7 @@ namespace WapplerSystems\Events2Extended\Controller;
 use JWeiland\Events2\Configuration\ExtConf;
 use JWeiland\Events2\Controller\AbstractController;
 use JWeiland\Events2\Domain\Model\Category;
+use JWeiland\Events2\Domain\Model\Event;
 use JWeiland\Events2\Domain\Model\Location;
 use JWeiland\Events2\Domain\Repository\CategoryRepository;
 use JWeiland\Events2\Domain\Repository\LocationRepository;
@@ -128,7 +129,17 @@ class CalendarController extends AbstractController
         foreach ($calendarWeeks as $calendarWeekNum => $weekDays) {
             foreach ($weekDays as $dayNum => $day) {
                 $dayOfMonth = $day['day'] ?? -1;
-                $calendarWeeks[$calendarWeekNum][$dayNum]['events'] = $daysOfMonth[$dayOfMonth] ?? [];
+                $events = $daysOfMonth[$dayOfMonth] ?? [];
+                usort($events, function (Event $a, Event $b) {
+                    if ($a->getEventTime() === null || $b->getEventTime() === null) {
+                        return 0;
+                    }
+                    $timeA = strtotime($a->getEventTime()->getTimeBegin());
+                    $timeB = strtotime($b->getEventTime()->getTimeBegin());
+                    return $timeA <=> $timeB;
+                });
+                $calendarWeeks[$calendarWeekNum][$dayNum]['events'] = $events;
+
                 if (isset($day['date']) && $day['date'] instanceof \DateTimeImmutable) {
                     if ($day['date']->format('Y-m-d') === (new \DateTimeImmutable('today'))->format('Y-m-d')) {
                         $calendarWeeks[$calendarWeekNum][$dayNum]['isToday'] = true;
